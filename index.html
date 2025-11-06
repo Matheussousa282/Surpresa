@@ -68,6 +68,8 @@
       position: relative;
       z-index: 2;
       transition: opacity 1s ease, transform 1s ease;
+      text-align: center;
+      padding: 1rem;
     }
 
     body.light .switch-container {
@@ -78,8 +80,8 @@
 
     .switch {
       position: relative;
-      width: 100px;
-      height: 200px;
+      width: clamp(70px, 10vw, 100px);
+      height: clamp(140px, 20vh, 200px);
       background: #2c2c2c;
       border-radius: 50px;
       box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.6),
@@ -91,13 +93,13 @@
     .switch::before {
       content: "";
       position: absolute;
-      top: 20px;
+      top: 15%;
       left: 50%;
       transform: translateX(-50%);
-      width: 80px;
-      height: 80px;
+      width: 70%;
+      height: 40%;
       background: #555;
-      border-radius: 40px;
+      border-radius: 50%;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
       transition: all 0.4s ease;
     }
@@ -107,7 +109,7 @@
     }
 
     body.light .switch::before {
-      top: 100px;
+      top: 55%;
       background: #fffacd;
       box-shadow: 0 0 25px rgba(255, 240, 180, 0.9);
     }
@@ -125,6 +127,7 @@
       transition: opacity 1.2s ease;
       overflow: hidden;
       z-index: 3;
+      padding: 1rem;
     }
 
     body.light .main-content {
@@ -134,7 +137,7 @@
 
     /* Texto principal */
     .typewriter {
-      font-size: 1.8rem;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
       font-weight: 700;
       color: #333;
       text-align: center;
@@ -150,10 +153,10 @@
 
     .buttons-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 1rem;
       margin-top: 2rem;
-      width: 80%;
+      width: 90%;
       max-width: 700px;
       opacity: 0;
       transform: translateY(30px);
@@ -178,6 +181,7 @@
       backdrop-filter: blur(6px);
       position: relative;
       overflow: hidden;
+      font-size: clamp(0.9rem, 2.5vw, 1rem);
     }
 
     .btn-elogio:hover {
@@ -189,17 +193,17 @@
     /* Botão de desligar */
     .power-btn {
       position: absolute;
-      top: 20px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
       background: rgba(255, 255, 255, 0.9);
       color: #333;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
+      width: clamp(40px, 6vw, 50px);
+      height: clamp(40px, 6vw, 50px);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
+      font-size: clamp(1rem, 3vw, 1.3rem);
       cursor: pointer;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -239,10 +243,11 @@
       border-radius: 1rem;
       padding: 1.5rem 2rem;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
-      font-size: 1.5rem;
+      font-size: clamp(1rem, 3vw, 1.5rem);
       opacity: 0;
       animation: fadeInOut 2.5s ease forwards;
       z-index: 101;
+      text-align: center;
     }
 
     @keyframes fadeInOut {
@@ -252,6 +257,21 @@
       80% { opacity: 1; }
       100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
     }
+
+    /* Responsividade extra */
+    @media (max-width: 600px) {
+      .switch-container h1 {
+        font-size: 1rem;
+      }
+      .buttons-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .typewriter {
+        white-space: normal;
+        border: none;
+        animation: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -260,7 +280,7 @@
   <div class="sunrise" id="sunrise"></div>
 
   <div class="switch-container" id="switchContainer">
-    <h1 class="text-2xl mb-6 text-center font-semibold tracking-wide">
+    <h1 class="text-xl md:text-2xl mb-6 font-semibold tracking-wide">
       🌙 Toque no interruptor para acender a luz
     </h1>
     <div id="switch" class="switch"></div>
@@ -288,7 +308,6 @@
     const powerBtn = document.getElementById("powerBtn");
     const clickSound = document.getElementById("clickSound");
     const stars = document.getElementById("stars");
-    const switchContainer = document.getElementById("switchContainer");
 
     // Criar estrelas
     for (let i = 0; i < 100; i++) {
@@ -326,7 +345,6 @@
 
     document.querySelectorAll(".btn-elogio").forEach(btn => {
       btn.addEventListener("click", e => {
-        const rect = btn.getBoundingClientRect();
         for (let i = 0; i < 25; i++) {
           const particle = document.createElement("div");
           particle.className = "particle";
