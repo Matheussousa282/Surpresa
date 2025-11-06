@@ -18,8 +18,7 @@
     /* Estrelas */
     .stars {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      inset: 0;
       overflow: hidden;
       z-index: 0;
       transition: opacity 1s ease;
@@ -68,8 +67,8 @@
       position: relative;
       z-index: 2;
       transition: opacity 1s ease, transform 1s ease;
-      text-align: center;
       padding: 1rem;
+      text-align: center;
     }
 
     body.light .switch-container {
@@ -80,8 +79,8 @@
 
     .switch {
       position: relative;
-      width: clamp(70px, 10vw, 100px);
-      height: clamp(140px, 20vh, 200px);
+      width: clamp(70px, 12vw, 100px);
+      height: clamp(140px, 25vw, 200px);
       background: #2c2c2c;
       border-radius: 50px;
       box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.6),
@@ -93,10 +92,10 @@
     .switch::before {
       content: "";
       position: absolute;
-      top: 15%;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      width: 70%;
+      width: 80%;
       height: 40%;
       background: #555;
       border-radius: 50%;
@@ -128,6 +127,7 @@
       overflow: hidden;
       z-index: 3;
       padding: 1rem;
+      text-align: center;
     }
 
     body.light .main-content {
@@ -137,15 +137,17 @@
 
     /* Texto principal */
     .typewriter {
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-size: clamp(1rem, 4vw, 1.8rem);
       font-weight: 700;
       color: #333;
       text-align: center;
-      white-space: nowrap;
+      white-space: normal;
       border-right: 4px solid #333;
-      width: 0;
+      display: inline-block;
       overflow: hidden;
       animation: typing 3s steps(40) forwards, blink 0.75s step-end infinite;
+      max-width: 90vw;
+      line-height: 1.4;
     }
 
     @keyframes typing { from { width: 0; } to { width: 100%; } }
@@ -153,7 +155,7 @@
 
     .buttons-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
       margin-top: 2rem;
       width: 90%;
@@ -181,7 +183,7 @@
       backdrop-filter: blur(6px);
       position: relative;
       overflow: hidden;
-      font-size: clamp(0.9rem, 2.5vw, 1rem);
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     }
 
     .btn-elogio:hover {
@@ -193,8 +195,8 @@
     /* Botão de desligar */
     .power-btn {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      top: 10px;
+      right: 10px;
       background: rgba(255, 255, 255, 0.9);
       color: #333;
       border-radius: 50%;
@@ -241,7 +243,7 @@
       color: #333;
       font-weight: 600;
       border-radius: 1rem;
-      padding: 1.5rem 2rem;
+      padding: 1.2rem 1.5rem;
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
       font-size: clamp(1rem, 3vw, 1.5rem);
       opacity: 0;
@@ -257,21 +259,6 @@
       80% { opacity: 1; }
       100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
     }
-
-    /* Responsividade extra */
-    @media (max-width: 600px) {
-      .switch-container h1 {
-        font-size: 1rem;
-      }
-      .buttons-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .typewriter {
-        white-space: normal;
-        border: none;
-        animation: none;
-      }
-    }
   </style>
 </head>
 <body>
@@ -280,7 +267,7 @@
   <div class="sunrise" id="sunrise"></div>
 
   <div class="switch-container" id="switchContainer">
-    <h1 class="text-xl md:text-2xl mb-6 font-semibold tracking-wide">
+    <h1 class="text-xl sm:text-2xl mb-6 font-semibold tracking-wide">
       🌙 Toque no interruptor para acender a luz
     </h1>
     <div id="switch" class="switch"></div>
@@ -345,6 +332,7 @@
 
     document.querySelectorAll(".btn-elogio").forEach(btn => {
       btn.addEventListener("click", e => {
+        // Explosão de partículas
         for (let i = 0; i < 25; i++) {
           const particle = document.createElement("div");
           particle.className = "particle";
@@ -359,6 +347,7 @@
           setTimeout(() => particle.remove(), 1000);
         }
 
+        // Mostrar elogio no centro
         const popup = document.createElement("div");
         popup.className = "popup-message";
         popup.textContent = elogios[Math.floor(Math.random() * elogios.length)];
